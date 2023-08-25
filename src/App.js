@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+// Modules
+import React from 'react';
+import { useRecoilValue } from 'recoil';
+import { customerAtom } from './data/atoms';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import './styles/index.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Components
+import Header from './components/Header';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Profile from './pages/Profile';
+
+export default function App() {
+    const customer = useRecoilValue(customerAtom);
+
+    return (
+        <div className="container">
+            <BrowserRouter>
+                <Header />
+                {!customer.id &&
+                    <Routes>
+                        <Route path="/register/:attemptedEmail" element={
+                            <Register />
+                        }>
+                        </Route>
+                        <Route path="/register" element={
+                            <Register />
+                        }>
+                        </Route>
+                        <Route path="/" element={
+                            <Login />
+                        }>
+                        </Route>
+                    </Routes>}
+                {customer.id &&
+                    <Routes>
+                        <Route path="/*" element={
+                            <Profile />
+                        }>
+                        </Route>
+                    </Routes>}
+            </BrowserRouter>
+        </div>
+    )
 }
-
-export default App;

@@ -1,0 +1,12 @@
+.pm div {
+    float: left;
+    margin-right: 5px
+}
+.pm img{
+    max-width: 28px;
+    max-height: 26px;
+}
+.pm .icon{
+    width: 30px;
+    text-align: center;
+}

@@ -1,0 +1,142 @@
+:root{
+  --brand-color: #0133a0;
+  --primary-text-color: #2f3847;
+}
+
+/* --------- CUSTOM FONT --------- */
+/*
+@font-face {
+  font-family: MarkPro;
+  src: url("./Mark-Pro.ttf") format("truetype");
+}
+*/
+
+body, html {
+  height: 100%;
+  font-family: Roboto, sans-serif;
+  color: var(--primary-text-color);
+}
+table, th, td{
+  color: var(--primary-text-color) !important;
+}
+th{
+  border-bottom: 1px solid silver !important;
+  font-weight: bold;
+}
+.no-style{
+  text-decoration: none;
+}
+a, a:hover, a:visited{
+  color: var(--primary-text-color);
+  text-decoration: none;
+}
+/* .wallet{
+  border-radius: 4px;
+  padding: 20px 20px 10px 20px;
+  box-shadow: silver 0px 0px 6px 0px;
+} */
+.shadow-table{
+  box-shadow: silver 0px 0px 6px 0px;
+  padding: 5px 5px 0 5px;
+  margin-bottom:20px;
+}
+.error{
+  font-size: smaller;
+  color: red;
+}
+.logo {
+  max-width: 200px;
+}
+.faIcon {
+  font-size: 25px;
+  cursor: pointer;
+  margin-left: 20px;
+  color: #3c4257;
+}
+code {
+  color: blue
+}
+.table{
+  margin-bottom:0
+}
+
+/* .subPrice div{
+  margin: 7px 0;
+}
+.subPrice{
+  border-radius: 4px;
+  text-align: center;
+  padding: 10px
+} */
+ol, ul{
+  list-style-type: none;
+  padding-left:0;
+  margin-bottom: 0;
+}
+/* li:not(:first-child){
+  border-top: 1px dashed silver;
+  margin-top: 5px;
+  padding-top: 5px;
+} */
+
+
+/* --------- Datepicker overrides --------- */
+
+.datepicker .react-date-picker__wrapper{
+  border-color: transparent;
+}
+.datepicker input{
+  color: var(--primary-text-color);
+}
+.datepicker button:first-of-type{
+  display: none
+}
+
+/* --------- ANIMATIONS --------- */
+.spinner {
+  animation: spin infinite 1s linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --------- BOOTSTRAP OVERRIDES --------- */
+.btn-primary, .btn-primary:disabled{
+  background-color: var(--brand-color);
+  border-color: var(--brand-color);
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+  background-color: var(--brand-color);
+  border: 1px solid var(--brand-color);
+}
+
+/* --------- BADGES --------- */
+.badge{
+  font-size: 0.85em;
+}
+.badge-red{
+  background-color: rgb(253, 226, 221);
+  color: rgb(164, 28, 78)
+}
+.badge-green{
+  background-color: rgb(203, 244, 201);
+  color: rgb(14, 98, 69)
+}
+.badge-silver{
+  background-color: rgb(227, 232, 238);
+  color: rgb(79, 86, 107)
+}
+.badge-blue{
+  background-color: rgb(214, 236, 255);
+  color: rgb(61, 78, 172)
+}
+.badge-gray{
+  background-color: rgb(56, 56, 56);
+  color: white;
+}
