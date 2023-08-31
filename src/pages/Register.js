@@ -6,13 +6,14 @@ import * as Utils from '../utilities';
 
 export default function Register(props) {
     const { attemptedEmail } = useParams();
-    
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState(attemptedEmail);
     const [line1, setLine1] = useState(Utils.defaultAddress.line1);
     const [city, setCity] = useState(Utils.defaultAddress.city);
     const [stateProv, setStateProv] = useState(Utils.defaultAddress.state);
     const [postalCode, setPostalCode] = useState(Utils.defaultAddress.postalCode);
+    const [testClock, setTestClock] = useState(false);
 
     const [customer, setCustomer] = useRecoilState(customerAtom);
 
@@ -46,7 +47,8 @@ export default function Register(props) {
                 line1: line1,
                 city: city,
                 state: stateProv,
-                postal_code: postalCode
+                postal_code: postalCode,
+                testClock: testClock
             })
         })
             .then(res => res.json())
@@ -78,14 +80,14 @@ export default function Register(props) {
                 <div className="row mb-3">
                     <div className="col-6">
                         <label>Street Address</label>
-                        <input className="form-control" onChange={e => setLine1(e.target.value)} defaultValue={Utils.defaultAddress.line1}/>
+                        <input className="form-control" onChange={e => setLine1(e.target.value)} defaultValue={Utils.defaultAddress.line1} />
                     </div>
                     <div className="col-6">
                         <label>City</label>
-                        <input className="form-control" onChange={e => setCity(e.target.value)} defaultValue={Utils.defaultAddress.city}/>
+                        <input className="form-control" onChange={e => setCity(e.target.value)} defaultValue={Utils.defaultAddress.city} />
                     </div>
                 </div>
-                <div className="row mb-3">
+                <div className="row mb-4">
                     <div className="col-6">
                         <label>State</label>
                         <input className="form-control" onChange={e => setStateProv(e.target.value)} defaultValue={Utils.defaultAddress.state} />
@@ -95,16 +97,21 @@ export default function Register(props) {
                         <input className="form-control" onChange={e => setPostalCode(e.target.value)} defaultValue={Utils.defaultAddress.postalCode} />
                     </div>
                 </div>
-                <div className="mb-3 mt-5">
-                    <button className="form-control btn btn-primary" disabled={!formValid || !customer.id || processing} type="submit">
+                <div className="row mb-5 ms-1">
+                    <div className="col form-switch">
+                        <input className="form-check-input" type="checkbox" onChange={e => setTestClock(e.target.checked)} />
+                        <label className="ms-3">Create test clock to test billing scenarios</label>
+                    </div>
+                </div>
+
+                <div className="mb-3 ">
+                    <button className="form-control btn btn-primary" disabled={!formValid || customer.id || processing} type="submit">
                         <span id="button-text">
                             {processing ? "Registering..." : "Register"}
                         </span>
                     </button>
                 </div>
-
             </form>
         </div>
-
     )
 }

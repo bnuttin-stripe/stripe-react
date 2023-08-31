@@ -54,7 +54,7 @@ a, a:hover, a:visited{
   color: #3c4257;
 }
 code {
-  color: blue
+  color: var(--primary-text-color);
 }
 .table{
   margin-bottom:0
@@ -116,6 +116,11 @@ ol, ul{
   border: 1px solid var(--brand-color);
 }
 
+.form-check-input:checked{
+  background-color: var(--brand-color);
+  border-color: var(--brand-color);
+}
+
 /* --------- BADGES --------- */
 .badge{
   font-size: 0.85em;
@@ -139,4 +144,16 @@ ol, ul{
 .badge-gray{
   background-color: rgb(56, 56, 56);
   color: white;
+}
+
+/* --------- Datepicker overrides --------- */
+
+.datepicker .react-date-picker__wrapper{
+  border-color: transparent;
+}
+.datepicker input{
+  color: var(--primary-text-color);
+}
+.datepicker button:first-of-type{
+  display: none
 }

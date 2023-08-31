@@ -31,7 +31,7 @@ export default function PM(props) {
                             {props.pm.card.brand === 'unionpay' && <img src={UnionPay} alt="logo" />}
                             {props.pm.card.brand === 'visa' && <img src={Visa} alt="logo" />}
                         </div>
-                        <div><code>**** {props.pm.card.last4}</code> exp. {props.pm.card.exp_month}/{props.pm.card.exp_year.toString().slice(-2)}</div>
+                        <div><code>**** {props.pm.card.last4} exp. {props.pm.card.exp_month}/{props.pm.card.exp_year.toString().slice(-2)}</code></div>
                     </>
                 }
                 {props.pm.type === 'us_bank_account' &&
@@ -39,7 +39,7 @@ export default function PM(props) {
                         <div className="icon">
                             <img src={Bank} alt="logo" />
                         </div>
-                        <div>{props.pm.us_bank_account.bank_name}<code> **** {props.pm.us_bank_account.last4}</code></div>
+                        <div><code>{props.pm.us_bank_account.bank_name} **** {props.pm.us_bank_account.last4}</code></div>
                     </>
                 }
             </div>

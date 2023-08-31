@@ -15,38 +15,72 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const stripe = require('stripe')(STRIPE_KEY);
 
 /* ------ CUSTOMER ------ */
+// Get a test clock
+app.get('/test-clocks/:id', async (req, res) => {
+    const id = req.params.id;
+    const testClock = await stripe.testHelpers.testClocks.retrieve(id);
+    res.send(testClock);
+});
+
+// Advance test clock
+app.post('/test-clocks', async (req, res) => {
+    const id = req.body.id;
+    const timestamp = req.body.timestamp;
+    const testClock = await stripe.testHelpers.testClocks.advance(
+        id,
+        { frozen_time: timestamp }
+    )
+    res.send(testClock)
+});
+
 // Get customer
 app.get('/customers/:email', async (req, res) => {
+    const email = req.params.email;
     var output = {
         id: ''
     };
-    const email = req.params.email;
-    const customer = await stripe.customers.list({
-        email: email
-    });
-    if (customer.data.length > 0) {
-        output = customer.data[0]
+
+    // First we search through the test clocks
+    const clocks = await stripe.testHelpers.testClocks.list({ limit: 100 })
+    if (clocks.data.length > 0) {
+        for (var i = 0; i < clocks.data.length; i++) {
+            const customerTC = await stripe.customers.list({
+                email: email,
+                test_clock: clocks.data[i].id
+            });
+            if (customerTC.data.length > 0) {
+                output = customerTC.data[0]
+            }
+        }
     }
+
+    // If not found, we do a regular search
+    if (output.id === '') {
+        const customer = await stripe.customers.list({
+            email: email
+        })
+        if (customer.data.length > 0) {
+            output = customer.data[0]
+        }
+    }
+
+    console.log(output)
+    
     res.send(output);
 });
 
 
 // Create customer
-const createCustomer = async (email, name, line1, city, state, postalCode) => {
-    const existingCustomer = await stripe.customers.list({
-        email: email
-    });
+const createCustomer = async (email, name, line1, city, state, postalCode, testClock) => {
+    // const existingCustomer = await stripe.customers.list({
+    //     email: email
+    // });
 
-    if (existingCustomer.data.length > 0) return false;
+    // if (existingCustomer.data.length > 0) return false;
 
-    const testClock = await stripe.testHelpers.testClocks.create({
-        frozen_time: Math.floor(Date.now() / 1000)
-    });
-
-    const newCustomer = await stripe.customers.create({
+    let payload = {
         name: name,
         email: email,
-        test_clock: testClock.id,
         address: {
             line1: line1,
             city: city,
@@ -54,8 +88,16 @@ const createCustomer = async (email, name, line1, city, state, postalCode) => {
             country: 'US',
             postal_code: postalCode
         }
-    });
+    }
+    
+    if (testClock){
+        const testClock = await stripe.testHelpers.testClocks.create({
+            frozen_time: Math.floor(Date.now() / 1000)
+        });
+        payload.test_clock = testClock.id
+    }
 
+    const newCustomer = await stripe.customers.create(payload);
     return (newCustomer);
 }
 
@@ -66,8 +108,9 @@ app.post("/customers", async (req, res) => {
     const city = req.body.city;
     const state = req.body.state;
     const postalCode = req.body.postalCode;
+    const testClock = req.body.testClock;
 
-    const customer = await createCustomer(email, name, line1, city, state, postalCode);
+    const customer = await createCustomer(email, name, line1, city, state, postalCode, testClock);
     res.send(customer);
 });
 

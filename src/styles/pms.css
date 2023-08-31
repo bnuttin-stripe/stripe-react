@@ -1,6 +1,9 @@
+.pm {
+    min-width: max-content;
+}
 .pm div {
     float: left;
-    margin-right: 5px
+    margin-right: 5px;
 }
 .pm img{
     max-width: 28px;
