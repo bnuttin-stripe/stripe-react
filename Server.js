@@ -64,11 +64,8 @@ app.get('/customers/:email', async (req, res) => {
         }
     }
 
-    console.log(output)
-    
     res.send(output);
 });
-
 
 // Create customer
 const createCustomer = async (email, name, line1, city, state, postalCode, testClock) => {
@@ -142,6 +139,48 @@ app.post('/setup-intents', async (req, res) => {
         clientSecret: intent.client_secret
     });
 })
+
+/* ------ PRODUCTS ------ */
+// Get all products
+app.get('/products', async (req, res) => {
+    let output = [];
+
+    const products = await stripe.products.list({
+        limit: 30,
+        active: true
+    });
+
+    const prices = await stripe.prices.list({
+        limit: 30,
+        active: true
+    });
+
+    products.data.forEach(product => {
+        product.prices = [];
+        prices.data.forEach(price => {
+            if (price.product === product.id) product.prices.push(price);
+        })
+        product.is_subscription = product.prices.findIndex(x => x.recurring !== null) > -1;
+        output.push(product);
+    });
+
+    res.send(output);
+});
+
+// Get details and prices on a specific product
+app.get('/products/:id', async (req, res) => {
+    const id = req.params.id;
+    const product = await stripe.products.retrieve(id);
+    const prices = await stripe.prices.list({
+        product: req.params.id,
+        active: true,
+    });
+    product.prices = prices.data;
+    product.is_subscription = product.prices.findIndex(x => x.recurring !== null) > -1;
+    res.send({
+        product
+    });
+});
 
 /* ------ PAYMENTS ------ */
 // Get all payments

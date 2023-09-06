@@ -10,6 +10,7 @@ import Header from './components/Header';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import Catalog from './pages/Catalog';
 
 export default function App() {
     const customer = useRecoilValue(customerAtom);
@@ -35,6 +36,9 @@ export default function App() {
                     </Routes>}
                 {customer.id &&
                     <Routes>
+                        <Route path="/catalog" element={
+                            <Catalog />
+                        }></Route>
                         <Route path="/*" element={
                             <Profile />
                         }>

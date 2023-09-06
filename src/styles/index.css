@@ -4,16 +4,14 @@
 }
 
 /* --------- CUSTOM FONT --------- */
-/*
-@font-face {
-  font-family: MarkPro;
-  src: url("./Mark-Pro.ttf") format("truetype");
-}
-*/
+/* @font-face {
+  font-family: Sohne;
+  src: url("./Sohne-Buch.otf") format("opentype");
+} */
 
 body, html {
   height: 100%;
-  font-family: Roboto, sans-serif;
+  font-family: Open Sans, Roboto, sans-serif;
   color: var(--primary-text-color);
 }
 table, th, td{
@@ -59,26 +57,14 @@ code {
 .table{
   margin-bottom:0
 }
-
-/* .subPrice div{
-  margin: 7px 0;
-}
-.subPrice{
-  border-radius: 4px;
-  text-align: center;
-  padding: 10px
-} */
 ol, ul{
   list-style-type: none;
   padding-left:0;
   margin-bottom: 0;
 }
-/* li:not(:first-child){
-  border-top: 1px dashed silver;
-  margin-top: 5px;
-  padding-top: 5px;
-} */
-
+.card{
+  background-color: whitesmoke;
+}
 
 /* --------- Datepicker overrides --------- */
 
@@ -145,6 +131,11 @@ ol, ul{
   background-color: rgb(56, 56, 56);
   color: white;
 }
+.badge-orange{
+  background-color: orange;
+  color: orange;
+}
+
 
 /* --------- Datepicker overrides --------- */
 

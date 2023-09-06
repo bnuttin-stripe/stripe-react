@@ -14,17 +14,17 @@ const localStorageEffect = key => ({ setSelf, onSet }) => {
     });
 };
 
-export const paymentMethodsGlobalAtom = atom({
-    key: 'paymentMethodsGlobalAtom',
-    default: [],
-    effects: [
-        ({ onSet }) => {
-            onSet(data => {
-                console.log(data.length + " payment methods");
-            });
-        },
-    ]
-});
+// export const paymentMethodsGlobalAtom = atom({
+//     key: 'paymentMethodsGlobalAtom',
+//     default: [],
+//     effects: [
+//         ({ onSet }) => {
+//             onSet(data => {
+//                 console.log(data.length + " payment methods");
+//             });
+//         },
+//     ]
+// });
 
 export const customerAtom = atom({
     key: 'customerAtom',
@@ -39,3 +39,12 @@ export const refresherAtom = atom({
     default: {}
 });
 
+export const productAtom = atom({
+    key: 'productAtom',
+    default: []
+})
+
+export const cartAtom = atom({
+    key: 'cartAtom',
+    default: []
+})

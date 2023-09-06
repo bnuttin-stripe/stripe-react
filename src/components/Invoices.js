@@ -60,11 +60,11 @@ export default function Invoices(props) {
                 <tr key={key}>
                   <td style={{ whiteSpace: 'nowrap' }}><a href={invoice.hosted_invoice_url} target='_blank' rel="noreferrer">{invoice.number}</a></td>
                   <td>
-                    {invoice.status === 'draft' && <span className="badge badge-silver">Draft</span>}
-                    {invoice.status === 'open' && <span className="badge badge-blue">Open</span>}
-                    {invoice.status === 'paid' && <span className="badge badge-green">Paid</span>}
-                    {invoice.status === 'uncollectible' && <span className="badge badge-red">Uncollectible</span>}
-                    {invoice.status === 'void' && <span className="badge badge-silver">Void</span>}
+                    {invoice.status === 'draft' && <span className="badge rounded-pill badge-silver">Draft</span>}
+                    {invoice.status === 'open' && <span className="badge rounded-pill badge-blue">Open</span>}
+                    {invoice.status === 'paid' && <span className="badge rounded-pill badge-green">Paid</span>}
+                    {invoice.status === 'uncollectible' && <span className="badge rounded-pill badge-red">Uncollectible</span>}
+                    {invoice.status === 'void' && <span className="badge rounded-pill badge-silver">Void</span>}
                   </td>
                   <td><ul>{invoice.lines.data.map((line, key) => (
                     <li key={key}>{line.description}</li>
@@ -76,7 +76,7 @@ export default function Invoices(props) {
                     {invoice.collection_method === 'charge_automatically' && invoice.payment_intent && invoice.payment_intent.payment_method &&
                       <PM pm={invoice.payment_intent.payment_method} mode='mini' />}
                     {(invoice.payment_intent?.status === 'requires_action' || invoice.payment_intent?.status === 'requires_payment_method') &&
-                      <span style={{ backgroundColor: 'orange' }} className="badge">Requires Action</span>
+                      <span className="badge rounded-pill badge-orange">Requires Action</span>
                     }
                     {invoice.collection_method === 'send_invoice' &&
                       <div>Manual payment</div>

@@ -123,24 +123,26 @@ export default function Wallet(props) {
                     </>}
                     {isLoaded && pms !== undefined && <>
                         <Table borderless>
-                            {pms.map((pm, key) => (
-                                <tr key={key}>
-                                    <td>
-                                        <div style={{float:'left'}}>
-                                            <input type='radio'
-                                                id={pm.id}
-                                                checked={props.selectedPM === pm.id}
-                                                onChange={togglePM}
-                                            />
-                                        </div>
-                                        <div style={{float:'left'}}>
-                                            <PM pm={pm} />
-                                        </div>
-                                        <div style={{float:'left'}}>
-                                            <FontAwesomeIcon icon={faTrash} style={{ cursor: 'pointer' }} onClick={(e) => detachPM(pm.id)} />
-                                        </div>
-                                    </td>
-                                </tr>))}
+                            <tbody>
+                                {pms.map((pm, key) => (
+                                    <tr key={key}>
+                                        <td>
+                                            <div style={{ float: 'left', marginRight: 5 }}>
+                                                <input type='radio'
+                                                    id={pm.id}
+                                                    checked={props.selectedPM === pm.id}
+                                                    onChange={togglePM}
+                                                />
+                                            </div>
+                                            <div style={{ float: 'left' }}>
+                                                <PM pm={pm} />
+                                            </div>
+                                            <div style={{ float: 'right' }}>
+                                                <FontAwesomeIcon icon={faTrash} style={{ cursor: 'pointer' }} onClick={(e) => detachPM(pm.id)} />
+                                            </div>
+                                        </td>
+                                    </tr>))}
+                            </tbody>
                         </Table>
                     </>}
                     {props.canAdd && <button className="btn btn-primary m-2 mb-3" onClick={openModal}>Add a payment method</button>}

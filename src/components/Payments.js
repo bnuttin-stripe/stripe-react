@@ -54,7 +54,7 @@ export default function Payments(props) {
               </tr>
             </thead>
             <tbody>
-            {!isLoaded && <tr><td><FontAwesomeIcon icon={faSpinner} className='spinner' />&nbsp;Loading</td></tr>}
+              {!isLoaded && <tr><td><FontAwesomeIcon icon={faSpinner} className='spinner' />&nbsp;Loading</td></tr>}
               {isLoaded && payments.length === 0 && <tr><td>No data</td></tr>}
               {isLoaded && payments.map((payment, key) => (
                 <tr key={key}>
@@ -66,23 +66,23 @@ export default function Payments(props) {
                       : Utils.displayPrice((payment.amount - payment.latest_charge?.amount_refunded) / 100, 'usd')}
                   </td>
                   <td style={{ whiteSpace: 'nowrap' }}>
-                    {payment.latest_charge?.payment_method_details && <PM pm={payment.latest_charge?.payment_method_details} mode='mini' />}
+                    {payment.latest_charge?.payment_method_details && <PM pm={payment.latest_charge?.payment_method_details} />}
                   </td>
                   <td>
                     {payment.status === 'canceled' && <span className="badge badge-silver">Canceled</span>}
                     {payment.status === 'processing' && <span className="badge badge-blue">Processing</span>}
                     {payment.status === 'succeeded' && payment.amount_received > 0 && (
                       payment.latest_charge?.amount_refunded === 0
-                        ? <span className="badge badge-green">Succeeded</span>
+                        ? <span className="badge badge-green rounded-pill">Succeeded</span>
                         : payment.latest_charge?.amount_refunded !== payment.latest_charge?.amount_captured
-                          ? <span className="badge badge-blue">Partially refunded</span>
-                          : <span className="badge badge-silver">Refunded</span>
+                          ? <span className="badge badge-blue rounded-pill">Partially refunded</span>
+                          : <span className="badge badge-silver rounded-pill">Refunded</span>
                     )}
 
-                    {payment.status === 'requires_payment_method' && <span className="badge badge-red">Requires Payment Method</span>}
-                    {payment.status === 'requires_confirmation' && <span className="badge badge-red">Requires Confirmation</span>}
-                    {payment.status === 'requires_action' && <span className="badge badge-red">Requires Action</span>}
-                    {payment.status === 'requires_capture' && <span className="badge badge-blue">Funds on Hold</span>}
+                    {payment.status === 'requires_payment_method' && <span className="badge badge-red rounded-pill">Requires Payment Method</span>}
+                    {payment.status === 'requires_confirmation' && <span className="badge badge-red rounded-pill">Requires Confirmation</span>}
+                    {payment.status === 'requires_action' && <span className="badge badge-red rounded-pill">Requires Action</span>}
+                    {payment.status === 'requires_capture' && <span className="badge badge-blue rounded-pill">Funds on Hold</span>}
                   </td>
                   <td>
                     <a href={payment.latest_charge?.receipt_url} target='_blank' rel="noreferrer"><FontAwesomeIcon icon={faReceipt} /></a>

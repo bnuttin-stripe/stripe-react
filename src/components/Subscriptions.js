@@ -115,13 +115,13 @@ export default function Subscriptions(props) {
                   }</td>
                   <td ><FontAwesomeIcon icon={faEdit} onClick={openModal} id={subscription.id} /></td>
                   <td>
-                    {subscription.status === 'incomplete' && <span className="badge badge-red">Incomplete</span>}
-                    {subscription.status === 'incomplete_expired' && <span className="badge badge-red">Expired</span>}
-                    {subscription.status === 'trialing' && <span className="badge badge-blue">Trialing</span>}
-                    {subscription.status === 'active' && <span className="badge badge-green">Active</span>}
-                    {subscription.status === 'past_due' && <span className="badge badge-red">Past Due</span>}
-                    {subscription.status === 'canceled' && <span className="badge badge-silver">Canceled</span>}
-                    {subscription.status === 'unpaid' && <span className="badge badge-red">Unpaid</span>}
+                    {subscription.status === 'incomplete' && <span className="badge badge-red rounded-pill">Incomplete</span>}
+                    {subscription.status === 'incomplete_expired' && <span className="badge badge-red rounded-pill">Expired</span>}
+                    {subscription.status === 'trialing' && <span className="badge badge-blue rounded-pill">Trialing</span>}
+                    {subscription.status === 'active' && <span className="badge badge-green rounded-pill">Active</span>}
+                    {subscription.status === 'past_due' && <span className="badge badge-red rounded-pill">Past Due</span>}
+                    {subscription.status === 'canceled' && <span className="badge badge-silver rounded-pill">Canceled</span>}
+                    {subscription.status === 'unpaid' && <span className="badge badge-red rounded-pill">Unpaid</span>}
                   </td>
                 </tr>)
               )}
