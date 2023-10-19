@@ -4,7 +4,7 @@ import { customerAtom, refresherAtom } from '../data/atoms';
 
 import Wallet from '../components/Wallet';
 import Payments from '../components/Payments';
-import Test from '../components/Test';
+import Webhooks from '../components/Webhooks';
 import Subscriptions from '../components/Subscriptions';
 import Invoices from '../components/Invoices';
 import TestCards from '../components/TestCards';
@@ -35,6 +35,7 @@ export default function Profile(props) {
                         selectedPM={selectedPM}
                         setSelectedPM={setSelectedPM}
                     />
+                    <Webhooks />
                     <br/>
                 </div>
                 <div className="col-8">

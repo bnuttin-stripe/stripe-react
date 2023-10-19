@@ -29,7 +29,7 @@ export default function App() {
                             <Register />
                         }>
                         </Route>
-                        <Route path="/" element={
+                        <Route path="/*" element={
                             <Login />
                         }>
                         </Route>

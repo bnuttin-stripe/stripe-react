@@ -11,6 +11,7 @@ require('dotenv').config();
 
 const STRIPE_KEY = process.env.REACT_APP_SK;
 const PORT = process.env.REACT_APP_PORT;
+const PORT_WS = process.env.REACT_APP_PORT_WS;
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 const stripe = require('stripe')(STRIPE_KEY);
 
@@ -86,8 +87,8 @@ const createCustomer = async (email, name, line1, city, state, postalCode, testC
             postal_code: postalCode
         }
     }
-    
-    if (testClock){
+
+    if (testClock) {
         const testClock = await stripe.testHelpers.testClocks.create({
             frozen_time: Math.floor(Date.now() / 1000)
         });
@@ -235,8 +236,109 @@ app.post('/subscription-update/', async (req, res) => {
     res.send(subscription);
 });
 
+app.get('/test', async (req, res) => {
+    res.send("hello world");
+});
+
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+/* ------ WEBSOCKET ------ */
+const { WebSocket, WebSocketServer } = require('ws');
+const http = require('http');
+const uuidv4 = require('uuid').v4;
+
+// Spinning the http server and the WebSocket server.
+const server = http.createServer();
+const wsServer = new WebSocketServer({ server });
+server.listen(PORT_WS, () => {
+    console.log(`WebSocket server is running on port ${PORT_WS}`);
+});
+
+const clients = {};
+// I'm maintaining all active users in this object
+const users = {};
+// The current editor content is maintained here.
+let editorContent = null;
+// User activity history.
+let userActivity = [];
+
+const typesDef = {
+    USER_EVENT: 'userevent',
+    CONTENT_CHANGE: 'contentchange'
+  }
+
+wsServer.on('connection', function (connection) {
+    // Generate a unique code for every user
+    const userId = uuidv4();
+    console.log('Recieved a new connection');
+
+    // Store the new connection and handle messages
+    clients[userId] = connection;
+    console.log(`${userId} connected.`);
+    connection.on('message', (message) => handleMessage(message, userId));
+    // User disconnected
+    connection.on('close', () => handleDisconnect(userId));
+});
+
+
+function broadcastMessage(json) {
+    // We are sending the current data to all connected clients
+    const data = JSON.stringify(json);
+    for (let userId in clients) {
+        let client = clients[userId];
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(data);
+        }
+    };
+}
+
+function handleMessage(message, userId) {
+    const dataFromClient = JSON.parse(message.toString());
+    const json = { type: dataFromClient.type };
+    if (dataFromClient.type === typesDef.USER_EVENT) {
+      users[userId] = dataFromClient;
+      userActivity.push(`${dataFromClient.username} joined to edit the document`);
+      json.data = { users, userActivity };
+    } else if (dataFromClient.type === typesDef.CONTENT_CHANGE) {
+      editorContent = dataFromClient.content;
+      json.data = { editorContent, userActivity };
+    }
+    broadcastMessage(json);
+  }
+
+function handleDisconnect(userId) {
+    console.log(`${userId} disconnected.`);
+    const json = { type: typesDef.USER_EVENT };
+    const username = users[userId]?.username || userId;
+    userActivity.push(`${username} left the document`);
+    json.data = { users, userActivity };
+    delete clients[userId];
+    delete users[userId];
+    broadcastMessage(json);
+}
+
+/* ------ WEBHOOKS ------ */
+app.post('/webhooks', async (req, res) => {
+    const event = req.body;
+    const obj = event.data.object;
+    broadcastMessage(event);
+
+    switch (event.type) {
+        case 'payment_intent.succeeded':
+            res.sendStatus(200);
+            break;
+        default:
+            res.sendStatus(200);
+            break;
+    }
+});
+
+
 app.listen(PORT);
+
+
+
+
+
