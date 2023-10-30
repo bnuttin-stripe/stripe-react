@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { customerAtom, refresherAtom } from '../data/atoms';
 import { JsonViewer } from '@textea/json-viewer';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 
 import * as Utils from '../utilities';
-
+import { customerAtom, refresherAtom } from '../data/atoms';
 const WS_URL = "ws://127.0.0.1:8082";
 
 export default function Webhooks(props) {
@@ -31,10 +32,17 @@ export default function Webhooks(props) {
         <>
             <div className="row">
                 <div className="col"><h4 className="mb-2">Webhooks</h4></div>
-                <div className="col"><small className="text-muted float-end" style={{lineHeight:'34px'}}>Updated @ {lastUpdated.toLocaleTimeString('en-US')}</small></div>
+                <div className="col ">
+                    <FontAwesomeIcon className="float-end" icon={faEllipsis} fade style={{ marginTop: '10px', marginRight: '-10px' }} />
+                    {lastUpdated &&
+                        <small className="text-muted float-end" style={{ lineHeight: '34px', marginRight: '10px' }}>{lastUpdated.toLocaleTimeString('en-US')}</small>
+                    }
+                </div>
             </div>
-            <div className="row shadow-table" style={{maxHeight: 600, minHeight: 200, overflow: 'scroll'}}>
-                {status.length == 0 && <p>Listening for events</p>}
+            <div className="row shadow-table" style={{ maxHeight: 600, minHeight: 200, overflow: 'auto' }}>
+                {status.length == 0 && <>
+                    <p>Listening for events</p>
+                </>}
                 {status.length > 0 && status.map((row, key) => (
                     <><h6 className="mt-2">{row.type}</h6>
                         <JsonViewer

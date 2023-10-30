@@ -240,9 +240,6 @@ app.get('/test', async (req, res) => {
     res.send("hello world");
 });
 
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
 /* ------ WEBSOCKET ------ */
 const { WebSocket, WebSocketServer } = require('ws');
@@ -321,7 +318,9 @@ function handleDisconnect(userId) {
 
 /* ------ WEBHOOKS ------ */
 app.post('/webhooks', async (req, res) => {
+    console.log("Hello")
     const event = req.body;
+    console.log(event.type)
     const obj = event.data.object;
     broadcastMessage(event);
 
@@ -333,8 +332,14 @@ app.post('/webhooks', async (req, res) => {
             res.sendStatus(200);
             break;
     }
+
 });
 
+
+
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(PORT);
 
