@@ -165,6 +165,8 @@ app.get('/products', async (req, res) => {
         output.push(product);
     });
 
+    console.log(output)
+
     res.send(output);
 });
 
@@ -250,7 +252,7 @@ const uuidv4 = require('uuid').v4;
 const server = http.createServer();
 const wsServer = new WebSocketServer({ server });
 server.listen(PORT_WS, () => {
-    console.log(`WebSocket server is running on port ${PORT_WS}`);
+    //console.log(`WebSocket server is running on port ${PORT_WS}`);
 });
 
 const clients = {};
@@ -269,11 +271,11 @@ const typesDef = {
 wsServer.on('connection', function (connection) {
     // Generate a unique code for every user
     const userId = uuidv4();
-    console.log('Recieved a new connection');
+    //console.log('Recieved a new connection');
 
     // Store the new connection and handle messages
     clients[userId] = connection;
-    console.log(`${userId} connected.`);
+    //console.log(`${userId} connected.`);
     connection.on('message', (message) => handleMessage(message, userId));
     // User disconnected
     connection.on('close', () => handleDisconnect(userId));
@@ -318,9 +320,9 @@ function handleDisconnect(userId) {
 
 /* ------ WEBHOOKS ------ */
 app.post('/webhooks', async (req, res) => {
-    console.log("Hello")
+    //console.log("Hello")
     const event = req.body;
-    console.log(event.type)
+    //console.log(event.type)
     const obj = event.data.object;
     broadcastMessage(event);
 

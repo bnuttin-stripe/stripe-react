@@ -16,7 +16,6 @@ export default function Webhooks(props) {
 
     const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
         onOpen: () => {
-            //console.log('WebSocket connection established.');
         },
         onMessage: (e) => {
             setStatus([JSON.parse(e.data), ...status]);
@@ -39,7 +38,7 @@ export default function Webhooks(props) {
                     }
                 </div>
             </div>
-            <div className="row shadow-table" style={{ maxHeight: 600, minHeight: 200, overflow: 'auto' }}>
+            <div className="row shadow-table" style={{ maxHeight: 1000, minHeight: 200, overflow: 'auto' }}>
                 {status.length == 0 && <>
                     <p>Listening for events</p>
                 </>}

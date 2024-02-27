@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Catalog from './pages/Catalog';
+import Developer from './pages/Developer';
 
 export default function App() {
     const customer = useRecoilValue(customerAtom);
@@ -38,6 +39,12 @@ export default function App() {
                     <Routes>
                         <Route path="/catalog" element={
                             <Catalog />
+                        }></Route>
+                        <Route path="/profile" element={
+                            <Profile />
+                        }></Route>
+                        <Route path="/developer" element={
+                            <Developer />
                         }></Route>
                         <Route path="/*" element={
                             <Profile />

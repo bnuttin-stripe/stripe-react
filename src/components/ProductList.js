@@ -12,7 +12,7 @@ import { refresherAtom } from '../data/atoms';
 // Props:
 //      None
 
-export default function Products(props) {
+export default function ProductList(props) {
     // Atoms
     const refresher = useRecoilValue(refresherAtom);
 

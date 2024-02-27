@@ -138,6 +138,7 @@ export default function Subscriptions(props) {
 
         <Modal.Body>
           <div>Pick a new payment method for your subscription. This will take effect on your next billing cycle.</div>
+          {/* TODO: update subscription */}
           {/* <Wallet
             token={props.token}
             selectable={true}

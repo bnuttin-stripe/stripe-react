@@ -127,13 +127,13 @@ export default function Wallet(props) {
                                 {pms.map((pm, key) => (
                                     <tr key={key}>
                                         <td>
-                                            <div style={{ float: 'left', marginRight: 5 }}>
+                                            {props.selectable && <div style={{ float: 'left', marginRight: 5 }}>
                                                 <input type='radio'
                                                     id={pm.id}
                                                     checked={props.selectedPM === pm.id}
                                                     onChange={togglePM}
                                                 />
-                                            </div>
+                                            </div>}
                                             <div style={{ float: 'left' }}>
                                                 <PM pm={pm} />
                                             </div>

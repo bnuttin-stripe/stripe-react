@@ -7,7 +7,7 @@ import DatePicker from 'react-date-picker';
 import Logo from '../img/Logo.svg';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faUserCircle, faShoppingCart, faSpinner, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUserCircle, faShoppingCart, faSpinner, faCalendar, faLaptopCode, faShop } from '@fortawesome/free-solid-svg-icons';
 
 // Display a header - will show a test clock controller if there is a test clock on the customer object only
 // Atoms:
@@ -91,9 +91,21 @@ export default function Header(props) {
                 {customer.id && <div className="col-6">
                     <div className="row justify-content-end">
                         <div className="col-auto">
-                            {customer.name} ({customer.email})
+                            <Link to='/catalog'>
+                                <FontAwesomeIcon icon={faShop} className="faIcon" />
+                                {cart.length > 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {cart.length}
+                                </span>}
+                            </Link>
                         </div>
-                        {clock.id && <div className="col-auto" style={{ marginTop: -4 }}>
+                        <div className="col-auto">
+                            <Link to='/profile'>
+                                <FontAwesomeIcon icon={faUserCircle} className="faIcon" style={{ marginRight: 5 }} />
+                                {customer.name}
+                                {/* ({customer.email}) */}
+                            </Link>
+                        </div>
+                        {clock.id && <div className="col-auto">
                             {clockRefreshing && <FontAwesomeIcon icon={faSpinner} className='spinner' style={{ marginRight: 10 }} />}
                             {isLoaded &&
                                 <>
@@ -109,13 +121,12 @@ export default function Header(props) {
                                 </>
                             }
                         </div>}
-                        <div className="col-auto position-relative" style={{ marginTop: -4 }}>
-                            <FontAwesomeIcon icon={faShoppingCart} className="faIcon" />
-                            {cart.length > 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                {cart.length}
-                            </span>}
+                        <div className="col-auto">
+                            <Link to='/developer' target="_blank" rel="opener ">
+                                <FontAwesomeIcon icon={faLaptopCode} className="faIcon" />
+                            </Link>
                         </div>
-                        <div className="col-auto" style={{ marginTop: -4 }}>
+                        <div className="col-auto">
                             <FontAwesomeIcon icon={faSignOutAlt} onClick={logout} className="faIcon" />
                         </div>
                     </div>

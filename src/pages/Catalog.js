@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { customerAtom, refresherAtom, cartAtom } from '../data/atoms';
 
-import Products from '../components/Products';
+import ProductList from '../components/ProductList';
+import Cart from '../components/Cart';
 
 export default function Catalog(props) {
     // Atoms
@@ -18,7 +19,8 @@ export default function Catalog(props) {
             <div onClick={refreshProducts}>Refresh</div>
             <div className="row">
                 <div className="col">
-                    <Products buyable={true}/>
+                    <ProductList buyable={true}/>
+                    <Cart />
                     <br/>
                 </div>
             </div>

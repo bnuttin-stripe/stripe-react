@@ -48,7 +48,7 @@ a, a:hover, a:visited{
 .faIcon {
   font-size: 25px;
   cursor: pointer;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   color: #3c4257;
 }
 code {

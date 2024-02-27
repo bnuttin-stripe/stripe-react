@@ -28,19 +28,8 @@ export default function Profile(props) {
     return (
         <>
             <div className="row">
-                <div className="col-4" style={{ paddingRight: 50 }}>
-                    <Wallet
-                        canAdd={true}
-                        selectable={false}
-                        selectedPM={selectedPM}
-                        setSelectedPM={setSelectedPM}
-                    />
-                    <br/>
-                </div>
-                <div className="col-8">
-                    <Payments />
-                    <Subscriptions />
-                    <Invoices />
+                <div className="col">
+                    <Webhooks />
                 </div>
             </div>
         </>
